@@ -28,3 +28,111 @@
 
 ---
 
+## 完成写真
+![](/Media/Mujina_model01.png)
+![](/Media/Mujina_model02.png)
+
+## 配線図
+![](/Media/Mujina_cable_layout.png)
+
+## 組立時注意点
+
+ ### モーターID書き込み、ファームウェアアップデート
+
+![](/Media/mujina_motorID.png)
+ MujinaのモーターIDの割り振りは画像のようになっています。
+ IDの書き込み、ファームウェアアップデートについては[「motor_tool.md」](./motor_tool.md)を参照してください。
+
+
+
+ ### ファームウェアの書き込み
+   USB出力9軸IMUセンサモジュールV3と「WeAct」USB-CANFDインタフェースは下記リンクを参考の上、ファームウェアの書き込み後に機体へ組み込んでください。
+- #### [「USB出力9軸IMUセンサモジュールV3」](https://github.com/rt-net/rt-usb-9axis-imu3-stm32duino-fw)ファームウェアリポジトリ
+  - 書き込むバイナリファイルは[こちら](https://github.com/rt-net/rt-usb-9axis-imu3-stm32duino-fw/releases)です。
+  - 書き込みツール
+    - STM32CubeProg
+- #### [USB-CANFDインタフェース](https://github.com/rt-net/candleLight_fw)ファームウェアリポジトリ
+  - 書き込むバイナリファイルは[こちら](https://github.com/rt-net/candleLight_fw/releases/tag/v0.1.0-WeActStudio_USB2CANFDV1)です。
+  - 書き込みツール
+    - STM32CubeProg
+    - 「ST-Link V2」もしくは「ST-Link V3」
+    - ※ファームウェア書き込む事前作業としてFlashを空にする必要があります。こちらはWeActStudioのGithubのREADME[「How to completely empty Flash」](https://github.com/WeActStudio/WeActStudio.USB2CANFDV1?tab=readme-ov-file#how-to-completely-empty-flash)をご参照ください。
+  
+ ### LATTEPANDA IOTAの準備
+ Mujinaは[「LATTEPANDA」](https://www.lattepanda.com/lattepanda-iota)を内蔵します。組み立てる前に[Mujina_ros](https://github.com/rt-net/mujina_ros/blob/main/README.md)のREADMEを参照しPCのセットアップを行ってください。
+
+ - AUTO Power ONの設定
+   - LATTEPANDAはデフォルトでは本体側面のスイッチ手電源を入れますが、本体に内蔵してしまうため電源投入時に自動で起動する設定を行う必要があります。「Auto Power-On」の公式ドキュメントは[こちら](https://docs.lattepanda.com/content/iota_edition/auto_power_on/)です。
+![](/Media/APO.png)
+   - 写真赤枠のスイッチをONにすると電源投入と同時にPCは起動します。
+
+ ### LATTEPANDA IOTAの組み込み
+ 「RT-Mujina.stp」にはLATTEPANDA IOTAのモデルが含まれていません。
+ 下記画像を参考に取り付けをしてください。
+
+![](/Media/latte_build01.png)
+- 「黄銅スペーサー（BSB-310E）」を「FrameBodyInner」へ4か所取り付ける。
+![](/Media/latte_build02.png)
+- LATTEPANDA IOTAをマウントする。（ピンソケットが出る方が機体前方へ向きます）
+![](/Media/latte_build03.png)
+- 六角穴付きボルトM3x10にて4か所ねじ止めし固定する。
+![](/Media/latte_build04.jpg)
+- 画像のように取り付く。（画像の向かって左側が機体前方となる）
+
+ ### 配線
+ 配線図を参照しながら配線してください。
+ - #### LATTEPANDA IOTAへの配線
+![](/Media/cable_build01.jpg)
+   - USBケーブル（白2本）USB延長ケーブルを取り付ける。
+![](/Media/cable_build02.jpg)
+   - USBケーブル（CtoC 黒）を画像の矢印の箇所へ取り付ける。
+![](/Media/cable_build03.jpg)
+   - HDMI延長ケーブルを取り付ける。
+ - #### 各基板への配線
+![](/Media/cable_build04.jpg)
+   - 「USB出力9軸IMUセンサモジュールV3」と接続（USBケーブル（白））
+![](/Media/cable_build06.jpg)
+   - PH3ピンケーブルを50㎜程にカットしUSBCANインターフェースに付くターミナルブロックへ取り付ける。（CANH、CANL、GNDを基板とインターフェースとで確認しながら取り付ける）
+   - USBCANインターフェースは基板へ両面テープで取り付ける。
+![](/Media/cable_build05.jpg)
+   - ①LATTEPANDA IOTA→USBケーブル（白）→USB-CANFDインタフェース
+   - ②LATTEPANDA IOTA→USBケーブル（CtoC黒）→DCDC48to24V-USB-PD
+   - ③DCファンケーブル→DCDC48to24V-USB-PD
+![](/Media/cable_build07.jpg)
+   - XT30オスメスケーブルを取り付ける。
+   - ※必ず写真の位置で取り付けを行うこと。手前基板の赤×の2か所へは取り付けしないでください。
+
+
+![](/Media/cable_build13.jpg)
+   - ①モーターケーブル右頭350㎜
+   - ②モーターケーブル左頭250㎜
+   - ③モーターケーブル左頭250㎜
+   - ④モーターケーブル右頭350㎜
+
+
+![](/Media/cable_build14.jpg)
+   - ⑤モーターケーブル右頭600㎜
+   - ⑥モーターケーブル左頭450㎜
+   - ⑦モーターケーブル左頭450㎜
+   - ⑧モーターケーブル右頭600㎜
+
+
+![](/Media/cable_build15.png)
+   - ⑨モーターケーブル左頭150㎜
+   - ⑩モーターケーブル左頭150㎜
+   - ⑪モーターケーブル左頭350㎜
+   - ⑫モーターケーブル左頭350㎜
+
+
+![](/Media/cable_build08.jpg)
+   - 基板のXT30(2+2)と前後のモーターをそれぞれモーターケーブルを接続する。
+![](/Media/cable_build09.jpg)
+   - 後方のモーターケーブル、USB延長ケーブルはバッテリーケースの上部を画像のように通す。
+![](/Media/cable_build10.jpg)
+   - 電源ボタンケーブルの取り付け（赤矢印）、隣の押しボタンケーブルは本バージョンでは使用しません。（青矢印）配線端を絶縁処理のうえ取り付けください。
+![](/Media/cable_build11.jpg)
+   - EC5toXT60ケーブルを2本取り付ける。
+![](/Media/cable_build12.jpg)
+   - USBハブは両面テープにて取り付けてください。開発状況により、ゲームコントローラーに付属するUSB延長ケーブルも併せてご使用ください。
+
+  
