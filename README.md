@@ -1,138 +1,47 @@
-四足歩行ロボット「ムジナ」の設計データです。
 
-こちらのデータを用いて製造、運用する場合は、SICE SI2025のOSにて発表した"人と共存する四足歩行ロボットに向けたリスクアセスメントと安全設計手法の提案"をご一読ください。
-
-下記は、四足歩行ロボット等の開発・運用における**リスクアセスメント（物理的、電気・熱、運用上の危険）**をムジナで適用したものになっています。
-
----
-
-| 分類 | 危険源の分類 | 具体的なリスクの例 | リスク低減策 |
-| --- | --- | --- | --- |
-| **物理的な危険（メカ・構造・接触関連）** | 挟み込み・巻き込み | ロボットの関節部、足ピッチ形状、または機構部に人や物が挟み込まれる、または巻き込まれる。 | 最小すきま25mmを設計 |
-|  | 衝突 | 走行中や予期せぬ動作により、人や周囲の構造物と衝突し、人身傷害や物損を引き起こす。 | 柔らかい外装の取り付け |
-|  | 転倒 | ロボットが不整地、段差、または振動動作により転倒し、オペレーターや同伴者がつまずいて転倒する。 | 稼働中は50cm以上離れる |
-|  | 墜落・転落 | 走行中に開口部（穴、吹き抜け、階段など）にロボットが転落する。 | 近づかない走行ルートにする |
-|  | 落下 | 運搬中や高所での作業中に、ロボットが落下する（特に電源喪失時など）。 | 作業者は手袋と安全靴を装着 |
-|  | 鋭利な箇所 | ロボットの外装やフレームの鋭利なエッジや突出部による接触時の切り傷。 | エッジの除去、柔らかい外装の取り付け |
-|  | 運搬 | 本体を運搬時の負荷で作業者が関節を痛める | 重量を軽く、持ちやすくする |
-| **電気・熱の危険（内部システム関連）** | 感電 | 内部の電装システム（配線、コネクタなど）の露出や破損による感電。 | ハーネスをネット保護 |
-|  | 火災・発火 | 過電流や短絡、ケーブル切断、または電池の異常発熱（加熱）による火災。 | ヒューズ取付、電流＆電力監視、温度監視 |
-|  | やけど | モーターやプロセッサ、またはその他の内部システムが過熱することによる、人への接触時のやけど（火傷）。 | 冷却機構設置、手袋の使用、インジケータによる状態表示 |
-|  | 電池の異常 | リチウムイオン二次電池などの異常な膨張や発熱、過放電・過充電による危険。 | 電流監視、温度監視 |
-| **運用上の危険（制御・環境・操作関連）** | 通信断絶 | 制御システムとロボット間の通信が途絶し、ロボットが予期せぬ動作をする、または制御不能になる。 | マイコン指示によるブレーキ状態に移行 |
-|  | 電源喪失 | 走行中や作業中に電源が喪失し、ロボットの四肢がフリーになり、運搬が困難になる、または自由度の高さから予期せぬ動きが発生する。 | 胴体と地面との間に隙間を設ける、一部電磁ロック |
-|  | 無限回転 | 関節部に物理的な制限がないことによる異常な回転動作の発生。ハーネスの巻き込みによるショート。 | メカロックの設置 |
-|  | 誤動作・暴走 | ソフトウェアのバグやセンサーの異常、外部からのノイズなどによる制御系の誤動作や暴走。 | 独立したシステムによるモータ停止、電源停止 |
-|  | メンテナンス時のリスク | メンテナンス中に意図せずロボットが起動したり、通電状態のシステムに触れることによる危険。 | インジケータによる状態表示 |
-|  | 感染症 | 人との接触を前提とする運用において、表面に付着した細菌等による感染症のリスク | 定期的な消毒など |
-
----
 
 ## 完成写真
-![](/Media/Mujina_model01.png)
-![](/Media/Mujina_model02.png)
+![](./Media/Mujina_model01.png)
+![](./Media/Mujina_model02.png)
 
 ## 配線図
-![](/Media/Mujina_cable_layout.png)
+![](./Media/Mujina_cable_layout.png)
 
 ## 組立時注意点
 
  ### モーターID書き込み、ファームウェアアップデート
-
-![](/Media/mujina_motorID.png)
  MujinaのモーターIDの割り振りは画像のようになっています。
  IDの書き込み、ファームウェアアップデートについては[「motor_tool.md」](./motor_tool.md)を参照してください。
+![](./Media/mujina_motorID.png)
 
 
 
  ### ファームウェアの書き込み
-   USB出力9軸IMUセンサモジュールV3と「WeAct」USB-CANFDインタフェースは下記リンクを参考の上、ファームウェアの書き込み後に機体へ組み込んでください。
-- #### [「USB出力9軸IMUセンサモジュールV3」](https://github.com/rt-net/rt-usb-9axis-imu3-stm32duino-fw)ファームウェアリポジトリ
-  - 書き込むバイナリファイルは[こちら](https://github.com/rt-net/rt-usb-9axis-imu3-stm32duino-fw/releases)です。
-  - 書き込みツール
-    - STM32CubeProg
-- #### [USB-CANFDインタフェース](https://github.com/rt-net/candleLight_fw)ファームウェアリポジトリ
-  - 書き込むバイナリファイルは[こちら](https://github.com/rt-net/candleLight_fw/releases/tag/v0.1.0-WeActStudio_USB2CANFDV1)です。
-  - 書き込みツール
-    - STM32CubeProg
-    - 「ST-Link V2」もしくは「ST-Link V3」
-    - ※ファームウェア書き込む事前作業としてFlashを空にする必要があります。こちらはWeActStudioのGithubのREADME[「How to completely empty Flash」](https://github.com/WeActStudio/WeActStudio.USB2CANFDV1?tab=readme-ov-file#how-to-completely-empty-flash)をご参照ください。
-  
+   [USB出力9軸IMUセンサモジュールV3](https://www.rt-shop.jp/index.php?main_page=product_info&products_id=4247)と[「WeAct」USB-CANFDインタフェース](https://btoshop.jp/products/wa00013?srsltid=AfmBOooY02QRYLmUcxocVz3foPxRkKsoYWfWiYbLFpCIFLpd5vDMbJIA)はファームウェアの書き込みが必要です。[「firmware.md」](./firmware.md)を参照し、書き込み後、機体へ組み込んでください。
+   
+![](./Media/imu.jpg)
+![](./Media/usbcan.JPG)
+
+
+
+
  ### LATTEPANDA IOTAの準備
  Mujinaは[「LATTEPANDA」](https://www.lattepanda.com/lattepanda-iota)を内蔵します。組み立てる前に[Mujina_ros](https://github.com/rt-net/mujina_ros/blob/main/README.md)のREADMEを参照しPCのセットアップを行ってください。
 
  - AUTO Power ONの設定
    - LATTEPANDAはデフォルトでは本体側面のスイッチ手電源を入れますが、本体に内蔵してしまうため電源投入時に自動で起動する設定を行う必要があります。「Auto Power-On」の公式ドキュメントは[こちら](https://docs.lattepanda.com/content/iota_edition/auto_power_on/)です。
-![](/Media/APO.png)
-   - 写真赤枠のスイッチをONにすると電源投入と同時にPCは起動します。
 
- ### LATTEPANDA IOTAの組み込み
- 「RT-Mujina.stp」にはLATTEPANDA IOTAのモデルが含まれていません。
- 下記画像を参考に取り付けをしてください。
+![](./Media/APO.png)
 
-![](/Media/latte_build01.png)
-- 「黄銅スペーサー（BSB-310E）」を「FrameBodyInner」へ4か所取り付ける。
-![](/Media/latte_build02.png)
-- LATTEPANDA IOTAをマウントする。（ピンソケットが出る方が機体前方へ向きます）
-![](/Media/latte_build03.png)
-- 六角穴付きボルトM3x10にて4か所ねじ止めし固定する。
-![](/Media/latte_build04.jpg)
-- 画像のように取り付く。（画像の向かって左側が機体前方となる）
+  写真赤枠のスイッチをONにすると電源投入と同時にPCは起動します。
 
- ### 配線
- 配線図を参照しながら配線してください。
- - #### LATTEPANDA IOTAへの配線
-![](/Media/cable_build01.jpg)
-   - USBケーブル（白2本）USB延長ケーブルを取り付ける。
-![](/Media/cable_build02.jpg)
-   - USBケーブル（CtoC 黒）を画像の矢印の箇所へ取り付ける。
-![](/Media/cable_build03.jpg)
-   - HDMI延長ケーブルを取り付ける。
- - #### 各基板への配線
-![](/Media/cable_build04.jpg)
-   - 「USB出力9軸IMUセンサモジュールV3」と接続（USBケーブル（白））
-![](/Media/cable_build06.jpg)
-   - PH3ピンケーブルを50㎜程にカットしUSBCANインターフェースに付くターミナルブロックへ取り付ける。（CANH、CANL、GNDを基板とインターフェースとで確認しながら取り付ける）
-   - USBCANインターフェースは基板へ両面テープで取り付ける。
-![](/Media/cable_build05.jpg)
-   - ①LATTEPANDA IOTA→USBケーブル（白）→USB-CANFDインタフェース
-   - ②LATTEPANDA IOTA→USBケーブル（CtoC黒）→DCDC48to24V-USB-PD
-   - ③DCファンケーブル→DCDC48to24V-USB-PD
-![](/Media/cable_build07.jpg)
-   - XT30オスメスケーブルを取り付ける。
-   - ※必ず写真の位置で取り付けを行うこと。手前基板の赤×の2か所へは取り付けしないでください。
+  Mujinaへの組み込みは[lattepanda.md](./lattepanda.md)を参照してください。
 
+### 配線
+Mujina同体内、モーターケーブル等の配線は、[cable.md](./cable.md)を参照してください。
 
-![](/Media/cable_build13.jpg)
-   - ①モーターケーブル右頭350㎜
-   - ②モーターケーブル左頭250㎜
-   - ③モーターケーブル左頭250㎜
-   - ④モーターケーブル右頭350㎜
+#### ※モーターケーブルを接続していないモーターのXT30（2＋2）コネクタは絶縁処理を行ってください。
+![](./Media/cable_build16.JPG)
 
-
-![](/Media/cable_build14.jpg)
-   - ⑤モーターケーブル右頭600㎜
-   - ⑥モーターケーブル左頭450㎜
-   - ⑦モーターケーブル左頭450㎜
-   - ⑧モーターケーブル右頭600㎜
-
-
-![](/Media/cable_build15.png)
-   - ⑨モーターケーブル左頭150㎜
-   - ⑩モーターケーブル左頭150㎜
-   - ⑪モーターケーブル左頭350㎜
-   - ⑫モーターケーブル左頭350㎜
-
-
-![](/Media/cable_build08.jpg)
-   - 基板のXT30(2+2)と前後のモーターをそれぞれモーターケーブルを接続する。
-![](/Media/cable_build09.jpg)
-   - 後方のモーターケーブル、USB延長ケーブルはバッテリーケースの上部を画像のように通す。
-![](/Media/cable_build10.jpg)
-   - 電源ボタンケーブルの取り付け（赤矢印）、隣の押しボタンケーブルは本バージョンでは使用しません。（青矢印）配線端を絶縁処理のうえ取り付けください。
-![](/Media/cable_build11.jpg)
-   - EC5toXT60ケーブルを2本取り付ける。
-![](/Media/cable_build12.jpg)
-   - USBハブは両面テープにて取り付けてください。開発状況により、ゲームコントローラーに付属するUSB延長ケーブルも併せてご使用ください。
-
+ 
   
